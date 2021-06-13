@@ -26,6 +26,7 @@ export default function App() {
   function ClickHandler() {
     input = input.map(Number);
     var sum = input.reduce((result, number) => result + number);
+    setInput((input) => [0, 0, 0]);
     console.log(sum);
     if (sum === 180) {
       output = "YES IT IS A TRIANGLE, AS SUM OF THE ANGLES = " + sum;
@@ -39,10 +40,11 @@ export default function App() {
     <div className="App">
       <h1>Hello CodeSandbox</h1>
       <h2>Start editing to see some magic happen!</h2>
-      <input type="number" onChange={angle1InputHandler} required />
-      <input type="number" onChange={angle2InputHandler} />
-      <input type="number" onChange={angle3InputHandler} />
+      <input type="number" onChange={angle1InputHandler} value={input[0]} />
+      <input type="number" onChange={angle2InputHandler} value={input[1]} />
+      <input type="number" onChange={angle3InputHandler} value={input[2]} />
       <button
+        type="reset"
         onClick={() => {
           ClickHandler();
         }}
