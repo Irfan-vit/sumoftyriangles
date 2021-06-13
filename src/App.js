@@ -7,10 +7,14 @@ export default function App() {
   var [side1, setSide1] = useState("");
   var [side2, setSide2] = useState("");
   function ClickHandlerH() {
-    outputH = Math.sqrt(side1 ** 2 + side2 ** 2);
-    setOutputH(outputH);
-    setSide1(0);
-    setSide2(0);
+    if (side1 <= 0 || side2 <= 0) {
+      alert("input properly");
+    } else {
+      outputH = Math.sqrt(side1 ** 2 + side2 ** 2);
+      setOutputH(outputH);
+      setSide1(0);
+      setSide2(0);
+    }
   }
   // Hypotenuse end
 
@@ -51,19 +55,19 @@ export default function App() {
 
   function ClickHandler() {
     input = input.map(Number);
-    if (input === []) {
-      alert("I am an alert box!");
-    }
     try {
       var sum = input.reduce((result, number) => result + number);
     } catch (err) {
-      alert("Please Enter the angles => " + err);
+      alert("Please don't leave angles empty => " + err);
     }
     setInput((input) => [0, 0, 0]);
     console.log(sum);
     if (sum === 180) {
       output = "YES IT IS A TRIANGLE, AS SUM OF THE ANGLES = " + sum;
       setOutput(output);
+    } else if (sum <= 0 || input[0] <= 0 || input[1] <= 0 || input[2] <= 0) {
+      alert("enter values properly");
+      setOutput(0);
     } else {
       output = "NO IT IS NOT A TRIANGLE AND SUM OF ALL THE ANGLES = " + sum;
       setOutput(output);
@@ -74,9 +78,25 @@ export default function App() {
     <div className="App">
       <div id="check-traiangle">
         <h1> Find whether given angles can form a triangle</h1>
-        <input type="number" onChange={angle1InputHandler} value={input[0]} />
-        <input type="number" onChange={angle2InputHandler} value={input[1]} />
-        <input type="number" onChange={angle3InputHandler} value={input[2]} />
+        <input
+          type="number"
+          onChange={angle1InputHandler}
+          value={input[0]}
+          // onClick="this.value=NULL"
+          requiredTxt
+        />
+        <input
+          type="number"
+          onChange={angle2InputHandler}
+          value={input[1]}
+          requiredTxt
+        />
+        <input
+          type="number"
+          onChange={angle3InputHandler}
+          value={input[2]}
+          requiredTxt
+        />
         <button
           type="reset"
           onClick={() => {
@@ -95,11 +115,13 @@ export default function App() {
           type="number"
           onChange={(e) => setSide1(e.target.value)}
           value={side1}
+          requiredTxt
         />
         <input
           type="number"
           onChange={(e) => setSide2(e.target.value)}
           value={side2}
+          requiredTxt
         />
         <button
           onClick={() => {
@@ -118,11 +140,13 @@ export default function App() {
           type="number"
           onChange={(e) => setBase(e.target.value)}
           value={base}
+          requiredTxt
         />
         <input
           type="number"
           onChange={(e) => setHeight(e.target.value)}
           value={height}
+          requiredTxt
         />
         <button onClick={clickHandler}>Calculate</button>
         <h3>Area of the triangle is : {area}</h3>
